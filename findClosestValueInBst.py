@@ -1,28 +1,33 @@
 def findClosestValueInBst(tree, target):
     node = tree
-    current_value = node.value
-    closest_value = current_value
-    least_diff = abs(current_value - target)
-
-    print("target:", target)
+    result = node.value
+    least_diff = abs(node.value - target)
 
     while node:
         current_diff = abs(target - node.value)
-        print(node.value, ":", current_diff)
+
+        # if target is found in the BST, return it
+        if current_diff == 0:
+            return target
+
+        # updating result if the current difference is less than the least difference
         if current_diff < least_diff:
-            closest_value = node.value
             least_diff = current_diff
+            result = node.value
 
-        # left_diff = current_diff + 1
-        # right_diff = current_diff + 1
-        if node.value < target:
+        # if the current node doesn't have any children, return result
+        if node.left == None and node.right == None:
+            return result
+
+        # if target is less than the node's value, move to the left,
+        # otherwise move to the right
+        if node.left != None and target < node.value:
             node = node.left
-        else:
+        elif node.right != None:
             node = node.right
-
-    return closest_value
-
-
+        else:
+            return result
+    return result
 
 
 # This is the class of the input tree. Do not edit.
